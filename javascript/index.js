@@ -39,17 +39,6 @@ function animatedCss() {
     });
 }
 
-//play trump Intro sound
- function play(){
-    audio.setAttribute("src", "./sounds/trumpintro.mp3");
-    audio.play();
-    }
-
-//right click reload wapeon
-$(".container").on("contextmenu", function () {
-
-});
-
 //animate socialMedia
 $("a > img").on("mouseover", function () {
     $(this).animateCss(animation.flip);
@@ -92,6 +81,12 @@ function bitcoinDonation() {
     }, 600);
 }
 
+//play trump Intro sound
+ function play(){
+    audio.setAttribute("src", "./sounds/trumpintro.mp3");
+    audio.play();
+    }
+
 function gameMenu() {
 
     //animate bitcoin coin
@@ -100,7 +95,7 @@ function gameMenu() {
     //make the h2 option menu flash and toggle
     $("h2").on("click", function () {
         $(this).animateCss(animation.flash);
-
+        $(this).unbind("click");
         setTimeout(function () {
             $("h1, h2, .bitcoin").slideToggle("slow");
             selectGame(this.id);
