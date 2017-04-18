@@ -85,6 +85,10 @@ function bitcoinDonation() {
     }, 600);
 }
 
+ function play(){
+    audio.setAttribute("src", "./sounds/trumpintro.mp3");
+    audio.play();
+    }
 
 function gameMenu() {
 
@@ -111,10 +115,6 @@ function gameMenu() {
     });
 
     //play trump Intro sound
-    function play(){
-    audio.setAttribute("src", "./sounds/trumpintro.mp3");
-    audio.play();
-    }
     play();
 
 
