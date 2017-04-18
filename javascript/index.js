@@ -1,6 +1,7 @@
 $(document).ready(function () {
     gameMenu();
     animatedCss();
+    play();
 });
 
 
@@ -115,7 +116,7 @@ function gameMenu() {
     });
 
     //play trump Intro sound
-    play();
+    
 
 
     //make the 1st menu title hinge
