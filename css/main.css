@@ -3,6 +3,18 @@
         src: url("../font/Duck_Hunt/duckhunt.ttf");
 }
 
+@media screen and (max-width: 450px) {
+  .head {
+  display: inline-block;
+  width: 21%;
+  margin: 4px;
+  height: 21%;
+  border-radius: 10px;
+  border: 1px solid darkgoldenrod;
+  cursor: pointer;
+  }
+}
+
 html{
 	height: 100%;
 	width: 100%;
