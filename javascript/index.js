@@ -108,12 +108,12 @@ function gameMenu() {
         shoot += 1;
         $(".shoot-fired").html(shoot);
         audio.setAttribute("src", gunSound);
-        audio.setAttribute("autoplay", "autoplay");
+        audio.play();
     });
 
     //play trump Intro sound
     audio.setAttribute("src", "./sounds/trumpintro.mp3");
-    audio.setAttribute("autoplay", "autoplay");
+    audio.play();
 
 
     //make the 1st menu title hinge
@@ -191,7 +191,7 @@ function chrono() {
         }
         else if (timer === 5) {
             audio.setAttribute("src", "./sounds/voice5sec.mp3");
-            audio.setAttribute("autoplay", "autoplay");
+            audio.play();
         }
         else if (timer < 8) {
             $(".time-left").animateCss(animation.flash);
@@ -225,7 +225,7 @@ $(".container").on("click", ".head", function () {
     $(this).removeClass("animated infinite flip");
 
     audio.setAttribute("src", killSound);
-    audio.setAttribute("autoplay", "autoplay");
+    audio.play();
 
     setTimeout(function () {
         $(this).hide("explode", { pieces: 64 }, 1000).remove();
@@ -239,6 +239,8 @@ $(".container").on("click", ".head", function () {
         timer = 30;
         for (var i = 0; i < intervalIds.length; i++) { clearInterval(intervalIds[i]); }
         if (level === 8) {
+            $(".head").remove();
+            clearInterval(countDown);
             winGame();
         }
         else {
@@ -255,7 +257,7 @@ $(".container").on("click", ".head", function () {
 //game Over 
 function gameOver() {
     audio.setAttribute("src", "./sounds/game-over.mp3");
-    audio.setAttribute("autoplay", "autoplay");
+    audio.play();
     $(".head, .top, .bottom").remove();
     $(".container").append("<img src='./img/game-over.jpg' class='game-over animated infinite " + _.sample(animation) + "'>");
     setTimeout(function () {
@@ -265,8 +267,9 @@ function gameOver() {
 
 //win game
 function winGame() {
+    var audio = document.createElement("audio");
     audio.setAttribute("src", "./sounds/win-game.mp3");
-    audio.setAttribute("autoplay", "autoplay");
+    audio.play();
     $(".head, .top, .bottom").remove();
     $(".container").append("<img src='./img/game-win.jpg' class='game-win animated infinite " + _.sample(animation) + "'>");
     setTimeout(function () {
@@ -350,7 +353,7 @@ function gameOptions() {
         var audio = document.createElement("audio");
         killSound = "./sounds/" + this.id + ".mp3";
         audio.setAttribute("src", killSound);
-        audio.setAttribute("autoplay", "autoplay");
+        audio.play();
     });
 
     $(".arrow").on("click", function () {
