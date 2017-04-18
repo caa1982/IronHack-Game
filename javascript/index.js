@@ -78,7 +78,7 @@ function bitcoinDonation() {
             $("h2, h1, .bitcoin").slideToggle("slow");
         });
 
-        $.getJSON("https://blockchain.info/q/addressbalance/1EcwtXGbKwpHkBBBmHcHWpBpsWxCswoisp", function (data) {
+        $.getJSON("https://blockchain.info/q/addressbalance/1BmJkh8ukFBQANavHXLBeJaY7k3HsZtwSa", function (data) {
             $(".donation").html(data/100000000);
         });
 
