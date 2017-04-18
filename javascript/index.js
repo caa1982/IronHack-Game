@@ -39,6 +39,12 @@ function animatedCss() {
     });
 }
 
+//play trump Intro sound
+ function play(){
+    audio.setAttribute("src", "./sounds/trumpintro.mp3");
+    audio.play();
+    }
+
 //right click reload wapeon
 $(".container").on("contextmenu", function () {
 
@@ -86,11 +92,6 @@ function bitcoinDonation() {
     }, 600);
 }
 
- function play(){
-    audio.setAttribute("src", "./sounds/trumpintro.mp3");
-    audio.play();
-    }
-
 function gameMenu() {
 
     //animate bitcoin coin
@@ -114,10 +115,6 @@ function gameMenu() {
         audio.setAttribute("src", gunSound);
         audio.play();
     });
-
-    //play trump Intro sound
-    
-
 
     //make the 1st menu title hinge
     $(".trump-hunt").on("click", function () {
