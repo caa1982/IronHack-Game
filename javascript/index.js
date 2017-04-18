@@ -111,9 +111,11 @@ function gameMenu() {
     });
 
     //play trump Intro sound
-    var audio = document.createElement("audio");
+    function play(){
     audio.setAttribute("src", "./sounds/trumpintro.mp3");
     audio.play();
+    }
+    play();
 
 
     //make the 1st menu title hinge
