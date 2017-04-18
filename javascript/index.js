@@ -38,10 +38,6 @@ function animatedCss() {
     });
 }
 
-function tapOrClick(e) {
-
-}
-
 //right click reload wapeon
 $(".container").on("contextmenu", function () {
 
@@ -115,6 +111,7 @@ function gameMenu() {
     });
 
     //play trump Intro sound
+    var audio = document.createElement("audio");
     audio.setAttribute("src", "./sounds/trumpintro.mp3");
     audio.play();
 
