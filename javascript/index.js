@@ -1,15 +1,13 @@
 $(document).ready(function () {
     gameMenu();
     animatedCss();
-    play();
 });
 
 
 var _u = _.noConflict();
 var speed = 2000, level = 1, shoot = 0, timer = 30, count = 0, numHead = 3, bullets = 100, score = 0, totalScore = 0;
-var audio = document.createElement("audio");
-var gunSound = "./sounds/magnum.mp3";
-var killSound = "./sounds/wilhem.mp3";
+var gunSound = "magnum";
+var killSound = "wilhem";
 var countDown;
 var intervalIds = [];
 var head = [];
@@ -82,14 +80,15 @@ function bitcoinDonation() {
 }
 
 //play trump Intro sound
-function play(){
-    audio.setAttribute("src", "./sounds/trumpintro.mp3");
+function play(sound){
+    var audio = document.createElement("audio");
+    audio.setAttribute("src", "./sounds/"+sound+".mp3");
     audio.play();
 }
 
 function gameMenu() {
     headContainerClick();
-
+    play("trumpintro");
     //animate bitcoin coin
     $(".bitcoin").addClass("animated infinite flip");
 
@@ -183,8 +182,7 @@ function chrono() {
             gameOver();
         }
         else if (timer === 5) {
-            audio.setAttribute("src", "./sounds/voice5sec.mp3");
-            audio.play();
+            play("voice5sec");
         }
         else if (timer < 8) {
             $(".time-left").animateCss(animation.flash);
@@ -217,8 +215,7 @@ function headContainerClick(){
         $(".shoot-fired").html(shoot);
         $(".bullets").html(bullets);
         $(".points").html(score);
-        audio.setAttribute("src", gunSound);
-        audio.play();
+        play(gunSound);
         if(bullets === 0){
             $(".container").off("click");
             $(".middle").css("visibility", "visible");
@@ -260,8 +257,16 @@ function levels(){
 
 //click head explode target, counter for level, clearIntervals
 $(".container").on("click", ".head", function () {
-    var audio = document.createElement("audio");
     $(this).click(false);
+    play(killSound);
+    levels();
+    
+    $(this).removeClass("animated infinite flip");
+
+    setTimeout(function () {
+        $(this).hide("explode", { pieces: 64 }, 1000).remove();
+    }.bind(this), 700);
+
     if ($(this).attr("src") === "./img/merkelHead.png") {
         timer -= 5;
         score -= 14;
@@ -270,16 +275,6 @@ $(".container").on("click", ".head", function () {
         count++;
         score +=11;
     }
-    $(this).removeClass("animated infinite flip");
-
-    audio.setAttribute("src", killSound);
-    audio.play();
-
-    setTimeout(function () {
-        $(this).hide("explode", { pieces: 64 }, 1000).remove();
-    }.bind(this), 700);
-
-    levels();
 
 });
 
@@ -288,8 +283,7 @@ $(".container").on("click", ".head", function () {
 
 //game Over 
 function gameOver() {
-    audio.setAttribute("src", "./sounds/game-over.mp3");
-    audio.play();
+    play("game-over");
     $(".head, .top, .middle, .bottom").remove();
     $(".container").append($("<h2 class='score'>Total score:<span class='points'>"+totalScore+"</span></h2>"));
     setTimeout(function () {
@@ -304,9 +298,7 @@ function gameOver() {
 
 //win game
 function winGame() {
-    var audio = document.createElement("audio");
-    audio.setAttribute("src", "./sounds/win-game.mp3");
-    audio.play();
+    audio.play("win-game");
     $(".head, .top, .middle, .bottom").remove();
     $(".container").append($("<h2 class='score'>Total score:<span class='points'>"+totalScore+"</span></h2>"));
     setTimeout(function () {
@@ -386,7 +378,7 @@ function gameOptions() {
     });
 
     $(".gun").on("click", function () {
-        gunSound = "./sounds/" + this.id + ".mp3";
+        gunSound = this.id;
     });
 
     $(".sounds, .gun, .cursor").on("mouseover", function () {
@@ -394,10 +386,8 @@ function gameOptions() {
     });
 
     $(".sounds").on("click", function () {
-        var audio = document.createElement("audio");
-        killSound = "./sounds/" + this.id + ".mp3";
-        audio.setAttribute("src", killSound);
-        audio.play();
+        killSound = this.id;
+        play(killSound);
     });
 
     $(".arrow").on("click", function () {
