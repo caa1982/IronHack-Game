@@ -293,7 +293,7 @@ function gameOver() {
     audio.setAttribute("src", "./sounds/game-over.mp3");
     audio.play();
     $(".head, .top, .middle, .bottom").remove();
-    $(".container").append($("<h1 class='score'>Total score:<span class='points'>"+totalScore+"</span></h1>"));
+    $(".container").append($("<h2 class='score'>Total score:<span class='points'>"+totalScore+"</span></h2>"));
     setTimeout(function () {
         $(".score").remove();
         $(".container").append("<img src='./img/game-over.jpg' class='game-over animated infinite " + _.sample(animation) + "'>");
@@ -310,7 +310,7 @@ function winGame() {
     audio.setAttribute("src", "./sounds/win-game.mp3");
     audio.play();
     $(".head, .top, .middle, .bottom").remove();
-    $(".container").append($("<h1 class='score'>Total score:<span class='points'>"+totalScore+"</span></h1>"));
+    $(".container").append($("<h2 class='score'>Total score:<span class='points'>"+totalScore+"</span></h2>"));
     setTimeout(function () {
         $(".score").remove();
         $(".container").append("<img src='./img/game-win.jpg' class='game-win animated infinite " + _.sample(animation) + "'>");
