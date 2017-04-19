@@ -392,6 +392,7 @@ $(".container").on("contextmenu", function(){
 
 $(".container").on("swipe", function(){
     reload();
+    $(".bullets").html("hi");
 })
 
 function reload(){
