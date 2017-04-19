@@ -81,7 +81,6 @@ img.head{
 
 
 h3{
-	color: red;
 	font-family: duckhunt;
 	font-size: 3vw;
 	-webkit-touch-callout: none;
@@ -92,8 +91,12 @@ h3{
     user-select: none;
 }
 
-h3.a{
-	color: orange;
+.bottom > h3{
+	color: red;
+}
+
+.top > h3{
+	color: green;
 }
 
 .bottom{

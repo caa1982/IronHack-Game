@@ -6,7 +6,7 @@ $(document).ready(function () {
 
 
 var _u = _.noConflict();
-var speed = 2000, level = 1, shoot = 0, timer = 30, count = 0, numHead = 3, bullets = 100;
+var speed = 2000, level = 1, shoot = 0, timer = 30, count = 0, numHead = 3, bullets = 100, score = 0, totalScore = 0;
 var audio = document.createElement("audio");
 var gunSound = "./sounds/magnum.mp3";
 var killSound = "./sounds/wilhem.mp3";
@@ -147,26 +147,30 @@ function selectGame(key) {
 
 //append level, shoot fired and timer to container
 function stats() {
+    score = 0;
     setTimeout(function(){
         $(".container").append($("<div></div>")
-            .addClass("top text-center")
+            .addClass("row top")
             );
-        $(".top").append($("<h3 class='a'>Level:<span class='level'>1</span></h3>"));
+        $(".top").append(
+            $("<h3 class='levels'>Level:<span class='level'>1</span></h3>"),
+            $("<h3 class='score'>score:<span class='points'>0</span></h3>")
+            );
 
         $(".container").append($("<div></div>")
-            .addClass("middle text-center")
+            .addClass("middle")
             );
         $(".middle").append($("<h3 class='reload animated infinite zoomIn'>reload (click right)</h3>"));
 
         $(".container").append($("<div></div>")
-            .addClass("row bottom align-items-end text-center")
+            .addClass("row bottom text-center")
             );
         $(".bottom").append(
             $("<h3 class='b'>Shoot fired:<span class='shoot-fired'>0</span></h3>"),
             $("<h3 class='time-left'>Time left:<span class='timer'>30</span></h3>"),
             $("<h3 class='shoot-left'>Bullets Left:<span class='bullets'>6</span></h3>")
             );
-        $(".b, .time-left, .shoot-left").addClass("col");
+        $(".b, .time-left, .shoot-left, .levels, .score").addClass("col");
     }, 1000)
 }
 
@@ -177,6 +181,7 @@ function chrono() {
         timer -= 1;
         $(".timer").html(timer);
         if (timer <= 0) {
+            totalScore += score;
             clearInterval(countDown);
             gameOver();
         }
@@ -210,8 +215,10 @@ function headContainerClick(){
     $(".container").on("click", function () {
         shoot += 1;
         bullets -= 1;
+        score -= 1;
         $(".shoot-fired").html(shoot);
         $(".bullets").html(bullets);
+        $(".points").html(score);
         audio.setAttribute("src", gunSound);
         audio.play();
         if(bullets === 0){
@@ -226,7 +233,32 @@ function headContainerClick(){
     });
 
 
-
+//change level function
+function levels(){
+    if (count === numHead && timer !== 0) {
+        count = 0;
+        speed -= 250;
+        numHead += 1;
+        level += 1;
+        timer = 30;
+        for (var i = 0; i < intervalIds.length; i++) { clearInterval(intervalIds[i]); }
+            if (level === 8) {
+                $(".head").remove();
+                totalScore += score;
+                clearInterval(countDown);
+                winGame();
+            }
+            else {
+                $(".level").html(level);
+                $(".head").remove();
+                totalScore += score;
+                clearInterval(countDown);
+                setTimeout(function () {
+                    startGame();
+                }, 1000);
+            }
+        }
+    }
 
 //click head explode target, counter for level, clearIntervals
 $(".container").on("click", ".head", function () {
@@ -234,9 +266,11 @@ $(".container").on("click", ".head", function () {
     $(this).click(false);
     if ($(this).attr("src") === "./img/merkelHead.png") {
         timer -= 5;
+        score -= 14;
     }
     else {
         count++;
+        score +=11;
     }
     $(this).removeClass("animated infinite flip");
 
@@ -247,28 +281,9 @@ $(".container").on("click", ".head", function () {
         $(this).hide("explode", { pieces: 64 }, 1000).remove();
     }.bind(this), 700);
 
-    if (count === numHead && timer !== 0) {
-        count = 0;
-        speed -= 250;
-        numHead += 1;
-        level += 1;
-        timer = 30;
-        for (var i = 0; i < intervalIds.length; i++) { clearInterval(intervalIds[i]); }
-            if (level === 8) {
-                $(".head").remove();
-                clearInterval(countDown);
-                winGame();
-            }
-            else {
-                $(".level").html(level);
-                $(".head").remove();
-                clearInterval(countDown);
-                setTimeout(function () {
-                    startGame();
-                }, 1000);
-            }
-        }
-    });
+    levels();
+
+});
 
 }
 
@@ -278,8 +293,13 @@ function gameOver() {
     audio.setAttribute("src", "./sounds/game-over.mp3");
     audio.play();
     $(".head, .top, .middle, .bottom").remove();
-    $(".container").append("<img src='./img/game-over.jpg' class='game-over animated infinite " + _.sample(animation) + "'>");
+    $(".container").append($("<h1 class='score'>Total score:<span class='points'>"+totalScore+"</span></h1>"));
     setTimeout(function () {
+        $(".score").remove();
+        $(".container").append("<img src='./img/game-over.jpg' class='game-over animated infinite " + _.sample(animation) + "'>");
+    }, 5000);
+    setTimeout(function () {
+        totalScore = 0;
         location.reload();
     }, 11000);
 }
@@ -290,7 +310,11 @@ function winGame() {
     audio.setAttribute("src", "./sounds/win-game.mp3");
     audio.play();
     $(".head, .top, .middle, .bottom").remove();
-    $(".container").append("<img src='./img/game-win.jpg' class='game-win animated infinite " + _.sample(animation) + "'>");
+    $(".container").append($("<h1 class='score'>Total score:<span class='points'>"+totalScore+"</span></h1>"));
+    setTimeout(function () {
+        $(".score").remove();
+        $(".container").append("<img src='./img/game-win.jpg' class='game-win animated infinite " + _.sample(animation) + "'>");
+    }, 5000);
     setTimeout(function () {
         location.reload();
     }, 11000);
@@ -384,7 +408,6 @@ function gameOptions() {
     });
 
 }
-
 
 $(".container").on("contextmenu", function(){
     reload();
