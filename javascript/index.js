@@ -390,9 +390,9 @@ $(".container").on("contextmenu", function(){
     reload();
 })
 
-$(".container").on("swipe", function(){
-    reload();
-})
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+ reload();
+}
 
 function reload(){
     bullets = 6;
@@ -400,47 +400,3 @@ function reload(){
     $(".bullets").html(bullets);
     headContainerClick();
 }
-
-document.addEventListener('touchstart', handleTouchStart, false);        
-document.addEventListener('touchmove', handleTouchMove, false);
-
-var xDown = null;                                                        
-var yDown = null;                                                        
-
-function handleTouchStart(evt) {                                         
-    xDown = evt.originalEvent.touches[0].clientX;                                      
-    yDown = evt.originalEvent.touches[0].clientY;                                      
-};                                                
-
-function handleTouchMove(evt) {
-    if ( ! xDown || ! yDown ) {
-        return;
-    }
-
-    var xUp = evt.originalEvent.touches[0].clientX;                                    
-    var yUp = evt.originalEvent.touches[0].clientY;
-
-    var xDiff = xDown - xUp;
-    var yDiff = yDown - yUp;
-
-    if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
-        if ( xDiff > 0 ) {
-            /* left swipe */ 
-            reload();
-        } else {
-            /* right swipe */
-            reload();
-        }                       
-    } else {
-        if ( yDiff > 0 ) {
-            /* up swipe */ 
-            reload();
-        } else { 
-            /* down swipe */
-            reload();
-        }                                                                 
-    }
-    /* reset values */
-    xDown = null;
-    yDown = null;                                             
-};
