@@ -392,7 +392,7 @@ $(".container").on("contextmenu", function(){
 
 $(document).on('pageinit', function(event){
    $(".container").swiperight(function() {
-        $.mobile.reload();
+        reload();
     });
 });
 function reload(){
