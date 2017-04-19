@@ -390,10 +390,11 @@ $(".container").on("contextmenu", function(){
     reload();
 })
 
-$("html").on("swipe", function(){
-    reload();
-})
-
+$(document).on('pageinit', function(event){
+   $(".container").swipe(function() {
+        reload();
+    });
+});
 function reload(){
     bullets = 6;
     $(".middle").css("visibility", "hidden");
