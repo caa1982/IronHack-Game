@@ -37,43 +37,6 @@ function animatedCss() {
     });
 }
 
-function bitcoinDonation() {
-
-
-    setTimeout(function () {
-
-        $(".container").append($("<div></div>")
-            .addClass("btcDonation text-center animated fadeInDownBig")
-        );
-
-        $(".btcDonation").append(
-            $("<h2>Bitcoin Donations QR Code</h2>"),
-            $("<img src='img/QRcode.png'>"),
-            $("<h2>Total Donation:</h2>"),
-            $("<h2><span class='donation'></span> btc</h2>"),
-            $("<img class='arrow' src='img/arrow-left.png'>")
-        );
-
-        $(".arrow").on("click", function () {
-            $(".btcDonation").remove();
-            toggleMenu();
-        });
-
-        $.getJSON("https://blockchain.info/q/addressbalance/1BmJkh8ukFBQANavHXLBeJaY7k3HsZtwSa", function (data) {
-            $(".donation").html(data / 100000000);
-        });
-
-
-    }, 600);
-}
-
-//play trump Intro sound
-function play(sound) {
-    var audio = document.createElement("audio");
-    audio.setAttribute("src", "./sounds/" + sound + ".mp3");
-    audio.play();
-}
-
 function gameMenu() {
     headContainerClick();
 
@@ -106,109 +69,46 @@ function gameMenu() {
 
 }
 
+//play trump Intro sound
+function play(sound) {
+    var audio = document.createElement("audio");
+    audio.setAttribute("src", "./sounds/" + sound + ".mp3");
+    audio.play();
+}
+
 //toogle main Menu
 function toggleMenu() {
     $("h1, h2, .bitcoin").slideToggle("slow");
 }
 
-//head of Merkel shoot her and you get -5sec
-function merkelHead() {
-    var randomNumHeads = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
-    merkelHeads = [];
-    for (var i = 0; i < randomNumHeads; i++) {
-        merkelHeads.push("merkelHead");
-    }
-    createHead(merkelHeads, randomNumHeads);
-}
+function bitcoinDonation() {
 
-//check start user game selection
-function selectGame(key) {
-    switch (key) {
-        case "trump-game":
-            for (var i = 0; i < 10; i++) { head.push("trumpHead"); }
-            startGame("trumpgame");
-            stats();
-            break;
-        case "trumpPutin-game":
-            for (var x = 0; x < 5; x++) { head.push("trumpHead"); head.push("putinHead"); }
-            startGame("trumpPutin");
-            stats();
-            break;
-        case "trumpPutinKim-game":
-            for (var y = 0; y < 2; y++) { head.push("putinHead", "trumpHead", "kimHead", "kimHead", "kimHead"); }
-            startGame("trumpPutinKim");
-            stats();
-            break;
-        case "setting":
-            setTimeout(function () {
-                gameOptions();
-            }, 800);
-            break;
-    }
-}
 
-//append level, shoot fired and timer to container
-function stats() {
-    score = 0;
     setTimeout(function () {
-        $(".container").append($("<div></div>")
-            .addClass("row top")
-        );
-        $(".top").append(
-            $("<h3 class='levels'>Level:<span class='level'>1</span></h3>"),
-            $("<h3 class='score'>score:<span class='points'>0</span></h3>")
-        );
 
         $(".container").append($("<div></div>")
-            .addClass("middle")
+            .addClass("btcDonation text-center animated fadeInDownBig")
         );
-        $(".middle").append($("<h3 class='reload animated infinite zoomIn'>reload (click right)</h3>"));
 
-        $(".container").append($("<div></div>")
-            .addClass("row bottom text-center")
+        $(".btcDonation").append(
+            $("<h2>Bitcoin Donations QR Code</h2>"),
+            $("<img src='img/QRcode.png'>"),
+            $("<h2>Total Donation:</h2>"),
+            $("<h2><span class='donation'></span> btc</h2>"),
+            $("<img class='arrow' src='img/arrow-left.png'>")
         );
-        $(".bottom").append(
-            $("<h3 class='b'>Shoot fired:<span class='shoot-fired'>0</span></h3>"),
-            $("<h3 class='time-left'>Time left:<span class='timer'>30</span></h3>"),
-            $("<h3 class='shoot-left'>Bullets Left:<span class='bullets'>6</span></h3>")
-        );
-        $(".b, .time-left, .shoot-left, .levels, .score").addClass("col");
-    }, 1000)
-}
 
-//countDown timer setInterval
-function chrono() {
-    var randomTimeMerkel = Math.floor(Math.random() * (30 - 20 + 1)) + 20;
-    countDown = setInterval(function () {
-        timer -= 1;
-        $(".timer").html(timer);
-        if (timer <= 0) {
-            totalScore += score;
-            clearInterval(countDown);
-            gameOver();
-        }
-        else if (timer === 5) {
-            play("voice5sec");
-        }
-        else if (timer < 8) {
-            $(".time-left").animateCss(animation.flash);
-        }
-        else if (timer === randomTimeMerkel) {
-            merkelHead();
-        }
-    }, 1000);
-}
+        $(".arrow").on("click", function () {
+            $(".btcDonation").remove();
+            toggleMenu();
+        });
 
-//start game
-function startGame(image) {
-    shoot = 0;
-    bullets = 6;
-    $("body").css("background-image", "url('./img/" + image + ".jpg')");
-    $(".shoot-fired").html(shoot);
-    setTimeout(function () {
-        createHead(head, numHead);
-        chrono();
-    }, 1000);
+        $.getJSON("https://blockchain.info/q/addressbalance/1BmJkh8ukFBQANavHXLBeJaY7k3HsZtwSa", function (data) {
+            $(".donation").html(data / 100000000);
+        });
+
+
+    }, 600);
 }
 
 //function for click during the game
@@ -286,33 +186,104 @@ function headContainerClick() {
 
 }
 
-//game Over 
-function gameOver() {
-    play("game-over");
-    $(".head, .top, .middle, .bottom").remove();
-    $(".container").append($("<h2 class='score'>Total score:<span class='points'>" + totalScore + "</span></h2>"));
-    setTimeout(function () {
-        $(".score").remove();
-        $(".container").append("<img src='./img/game-over.jpg' class='game-over animated infinite " + _.sample(animation) + "'>");
-    }, 5000);
-    setTimeout(function () {
-        totalScore = 0;
-        location.reload();
-    }, 11000);
+//check start user game selection
+function selectGame(key) {
+    switch (key) {
+        case "trump-game":
+            for (var i = 0; i < 10; i++) { head.push("trumpHead"); }
+            startGame("trumpgame");
+            stats();
+            break;
+        case "trumpPutin-game":
+            for (var x = 0; x < 5; x++) { head.push("trumpHead"); head.push("putinHead"); }
+            startGame("trumpPutin");
+            stats();
+            break;
+        case "trumpPutinKim-game":
+            for (var y = 0; y < 2; y++) { head.push("putinHead", "trumpHead", "kimHead", "kimHead", "kimHead"); }
+            startGame("trumpPutinKim");
+            stats();
+            break;
+        case "setting":
+            setTimeout(function () {
+                gameOptions();
+            }, 800);
+            break;
+    }
 }
 
-//win game
-function winGame() {
-    play("win-game");
-    $(".head, .top, .middle, .bottom").remove();
-    $(".container").append($("<h2 class='score'>Total score:<span class='points'>" + totalScore + "</span></h2>"));
+//append level, shoot fired and timer to container
+function stats() {
+    score = 0;
     setTimeout(function () {
-        $(".score").remove();
-        $(".container").append("<img src='./img/game-win.jpg' class='game-win animated infinite " + _.sample(animation) + "'>");
-    }, 5000);
+        $(".container").append($("<div></div>")
+            .addClass("row top")
+        );
+        $(".top").append(
+            $("<h3 class='levels'>Level:<span class='level'>1</span></h3>"),
+            $("<h3 class='score'>score:<span class='points'>0</span></h3>")
+        );
+
+        $(".container").append($("<div></div>")
+            .addClass("middle")
+        );
+        $(".middle").append($("<h3 class='reload animated infinite zoomIn'>reload (click right)</h3>"));
+
+        $(".container").append($("<div></div>")
+            .addClass("row bottom text-center")
+        );
+        $(".bottom").append(
+            $("<h3 class='b'>Shoot fired:<span class='shoot-fired'>0</span></h3>"),
+            $("<h3 class='time-left'>Time left:<span class='timer'>30</span></h3>"),
+            $("<h3 class='shoot-left'>Bullets Left:<span class='bullets'>6</span></h3>")
+        );
+        $(".b, .time-left, .shoot-left, .levels, .score").addClass("col");
+    }, 1000)
+}
+
+//start game
+function startGame(image) {
+    shoot = 0;
+    bullets = 6;
+    $("body").css("background-image", "url('./img/" + image + ".jpg')");
+    $(".shoot-fired").html(shoot);
     setTimeout(function () {
-        location.reload();
-    }, 11000);
+        createHead(head, numHead);
+        chrono();
+    }, 1000);
+}
+
+//countDown timer setInterval
+function chrono() {
+    var randomTimeMerkel = Math.floor(Math.random() * (30 - 20 + 1)) + 20;
+    countDown = setInterval(function () {
+        timer -= 1;
+        $(".timer").html(timer);
+        if (timer <= 0) {
+            totalScore += score;
+            clearInterval(countDown);
+            gameOver();
+        }
+        else if (timer === 5) {
+            play("voice5sec");
+        }
+        else if (timer < 8) {
+            $(".time-left").animateCss(animation.flash);
+        }
+        else if (timer === randomTimeMerkel) {
+            merkelHead();
+        }
+    }, 1000);
+}
+
+//head of Merkel shoot her and you get -5sec
+function merkelHead() {
+    var randomNumHeads = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
+    merkelHeads = [];
+    for (var i = 0; i < randomNumHeads; i++) {
+        merkelHeads.push("merkelHead");
+    }
+    createHead(merkelHeads, randomNumHeads);
 }
 
 //claculate top and left positions to animate heads
@@ -347,6 +318,33 @@ function animateImg(headId) {
         var positions = animateTopLeftCss();
         $(headId).animate({ top: positions[0], left: positions[1] }, false);
     }, speed));
+}
+
+function gameOver() {
+    play("game-over");
+    $(".head, .top, .middle, .bottom").remove();
+    $(".container").append($("<h2 class='score'>Total score:<span class='points'>" + totalScore + "</span></h2>"));
+    setTimeout(function () {
+        $(".score").remove();
+        $(".container").append("<img src='./img/game-over.jpg' class='game-over animated infinite " + _.sample(animation) + "'>");
+    }, 5000);
+    setTimeout(function () {
+        totalScore = 0;
+        location.reload();
+    }, 11000);
+}
+
+function winGame() {
+    play("win-game");
+    $(".head, .top, .middle, .bottom").remove();
+    $(".container").append($("<h2 class='score'>Total score:<span class='points'>" + totalScore + "</span></h2>"));
+    setTimeout(function () {
+        $(".score").remove();
+        $(".container").append("<img src='./img/game-win.jpg' class='game-win animated infinite " + _.sample(animation) + "'>");
+    }, 5000);
+    setTimeout(function () {
+        location.reload();
+    }, 11000);
 }
 
 //Game options
