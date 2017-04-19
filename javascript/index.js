@@ -390,7 +390,7 @@ $(".container").on("contextmenu", function(){
     reload();
 })
 
-$("body").on("swipe", function(){
+$("body").on("swiperight", function(){
     reload();
     $(".bullets").html("hi");
 })
