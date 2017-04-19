@@ -37,18 +37,6 @@ function animatedCss() {
     });
 }
 
-//animate socialMedia
-$("a > img").on("mouseover", function () {
-    $(this).animateCss(animation.flip);
-});
-
-
-//bitcoin Click menu donation page
-$(".bitcoin").on("click", function () {
-    $("h1, h2, .bitcoin").slideToggle("slow");
-    bitcoinDonation();
-});
-
 function bitcoinDonation() {
 
 
@@ -88,7 +76,20 @@ function play(sound){
 
 function gameMenu() {
     headContainerClick();
+
     play("trumpintro");
+
+    //animate socialMedia
+    $("a > img").on("mouseover", function () {
+        $(this).animateCss(animation.flip);
+    });
+
+    //bitcoin Click menu donation page
+    $(".bitcoin").on("click", function () {
+        $("h1, h2, .bitcoin").slideToggle("slow");
+        bitcoinDonation();
+    });
+
     //animate bitcoin coin
     $(".bitcoin").addClass("animated infinite flip");
 
@@ -260,7 +261,7 @@ $(".container").on("click", ".head", function () {
     $(this).click(false);
     play(killSound);
     levels();
-    
+
     $(this).removeClass("animated infinite flip");
 
     setTimeout(function () {
