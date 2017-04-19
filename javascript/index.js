@@ -8,6 +8,7 @@ var _u = _.noConflict();
 var speed = 2000, level = 1, shoot = 0, timer = 30, count = 0, numHead = 3, bullets = 100, score = 0, totalScore = 0;
 var gunSound = "magnum";
 var killSound = "wilhem";
+var image = "";
 var countDown;
 var intervalIds = [];
 var head = [];
@@ -41,6 +42,11 @@ function gameMenu() {
     headContainerClick();
 
     play("trumpintro");
+
+    //make the 1st menu title hinge
+    $(".trump-hunt").on("click", function () {
+        $(this).animateCss("hinge");
+    });
 
     //animate socialMedia
     $("a > img").on("mouseover", function () {
@@ -128,44 +134,10 @@ function headContainerClick() {
         }
     });
 
-    //make the 1st menu title hinge
-    $(".trump-hunt").on("click", function () {
-        $(this).animateCss("hinge");
-    });
-
-
-    //change level function
-    function levels() {
-        if (count === numHead && timer !== 0) {
-            count = 0;
-            speed -= 250;
-            numHead += 1;
-            level += 1;
-            timer = 30;
-            for (var i = 0; i < intervalIds.length; i++) { clearInterval(intervalIds[i]); }
-            if (level === 8) {
-                $(".head").remove();
-                totalScore += score;
-                clearInterval(countDown);
-                winGame();
-            }
-            else {
-                $(".level").html(level);
-                $(".head").remove();
-                totalScore += score;
-                clearInterval(countDown);
-                setTimeout(function () {
-                    startGame();
-                }, 1000);
-            }
-        }
-    }
-
     //click head explode target, counter for level, clearIntervals
     $(".container").on("click", ".head", function () {
         $(this).click(false);
         play(killSound);
-        levels();
 
         $(this).removeClass("animated infinite flip");
 
@@ -178,12 +150,40 @@ function headContainerClick() {
             score -= 14;
         }
         else {
-            count++;
+            count += 1;
             score += 11;
+            levels();
         }
 
     });
 
+}
+
+//change level function
+function levels() {
+    if (count === numHead && timer !== 0) {
+        count = 0;
+        speed -= 250;
+        numHead += 1;
+        level += 1;
+        timer = 30;
+        for (var i = 0; i < intervalIds.length; i++) { clearInterval(intervalIds[i]); }
+        if (level === 8) {
+            $(".head").remove();
+            totalScore += score;
+            clearInterval(countDown);
+            winGame();
+        }
+        else {
+            $(".level").html(level);
+            $(".head").remove();
+            totalScore += score;
+            clearInterval(countDown);
+            setTimeout(function () {
+                startGame();
+            }, 1000);
+        }
+    }
 }
 
 //check start user game selection
@@ -191,17 +191,20 @@ function selectGame(key) {
     switch (key) {
         case "trump-game":
             for (var i = 0; i < 10; i++) { head.push("trumpHead"); }
-            startGame("trumpgame");
+            image = "trumpgame";
+            startGame();
             stats();
             break;
         case "trumpPutin-game":
             for (var x = 0; x < 5; x++) { head.push("trumpHead"); head.push("putinHead"); }
-            startGame("trumpPutin");
+            image = "trumpPutin";
+            startGame();
             stats();
             break;
         case "trumpPutinKim-game":
             for (var y = 0; y < 2; y++) { head.push("putinHead", "trumpHead", "kimHead", "kimHead", "kimHead"); }
-            startGame("trumpPutinKim");
+            image = "trumpPutinKim";
+            startGame();
             stats();
             break;
         case "setting":
@@ -242,7 +245,7 @@ function stats() {
 }
 
 //start game
-function startGame(image) {
+function startGame() {
     shoot = 0;
     bullets = 6;
     $("body").css("background-image", "url('./img/" + image + ".jpg')");
