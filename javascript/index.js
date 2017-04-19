@@ -163,7 +163,7 @@ function stats() {
         $(".middle").append($("<h3 class='reload animated infinite zoomIn'>reload (click right)</h3>"));
 
         $(".container").append($("<div></div>")
-            .addClass("row bottom text-center")
+            .addClass("row bottom")
             );
         $(".bottom").append(
             $("<h3 class='b'>Shoot fired:<span class='shoot-fired'>0</span></h3>"),
