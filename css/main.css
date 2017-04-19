@@ -107,6 +107,10 @@ h3.a{
     top: 0;
 }
 
+.middle{
+	visibility: hidden;
+}
+
 .cursor{
 	width: 6vw;
 	height: 6vw;

@@ -6,7 +6,7 @@ $(document).ready(function () {
 
 
 var _u = _.noConflict();
-var speed = 2000, level = 1, shoot = 0, timer = 30, count = 0, numHead = 3;
+var speed = 2000, level = 1, shoot = 0, timer = 30, count = 0, numHead = 3, bullets = 100;
 var audio = document.createElement("audio");
 var gunSound = "./sounds/magnum.mp3";
 var killSound = "./sounds/wilhem.mp3";
@@ -58,7 +58,7 @@ function bitcoinDonation() {
 
         $(".container").append($("<div></div>")
             .addClass("btcDonation text-center animated fadeInDownBig")
-        );
+            );
 
         $(".btcDonation").append(
             $("<h2>Bitcoin Donations QR Code</h2>"),
@@ -66,7 +66,7 @@ function bitcoinDonation() {
             $("<h2>Total Donation:</h2>"),
             $("<h2><span class='donation'></span> btc</h2>"),
             $("<img class='arrow' src='img/arrow-left.png'>")
-        );
+            );
 
         $(".arrow").on("click", function () {
             $(".btcDonation").remove();
@@ -82,12 +82,13 @@ function bitcoinDonation() {
 }
 
 //play trump Intro sound
- function play(){
+function play(){
     audio.setAttribute("src", "./sounds/trumpintro.mp3");
     audio.play();
-    }
+}
 
 function gameMenu() {
+    headContainerClick();
 
     //animate bitcoin coin
     $(".bitcoin").addClass("animated infinite flip");
@@ -103,20 +104,7 @@ function gameMenu() {
 
     });
 
-    //play Shoot Sound & add shoot to shoot fired
-    $(".container").on("click", function () {
-        shoot += 1;
-        $(".shoot-fired").html(shoot);
-        audio.setAttribute("src", gunSound);
-        audio.play();
-    });
-
-    //make the 1st menu title hinge
-    $(".trump-hunt").on("click", function () {
-        $(this).animateCss("hinge");
-    });
-
-}
+}    
 
 //head of Merkel shoot her and you get -5sec
 function merkelHead() {
@@ -132,46 +120,54 @@ function merkelHead() {
 function selectGame(key) {
     switch (key) {
         case "trump-game":
-            for (var i = 0; i < 10; i++) { head.push("trumpHead"); }
+        for (var i = 0; i < 10; i++) { head.push("trumpHead"); }
             startGame();
-            stats();
-            $("body").css("background-image", "url('./img/trumpgame.jpg')");
-            break;
+        stats();
+        $("body").css("background-image", "url('./img/trumpgame.jpg')");
+        break;
         case "trumpPutin-game":
-            for (var x = 0; x < 5; x++) { head.push("trumpHead"); head.push("putinHead"); }
+        for (var x = 0; x < 5; x++) { head.push("trumpHead"); head.push("putinHead"); }
             startGame();
-            stats();
-            $("body").css("background-image", "url('./img/trumpPutin.jpg')");
-            break;
+        stats();
+        $("body").css("background-image", "url('./img/trumpPutin.jpg')");
+        break;
         case "trumpPutinKim-game":
-            for (var y = 0; y < 2; y++) { head.push("putinHead", "trumpHead", "kimHead", "kimHead", "kimHead"); }
+        for (var y = 0; y < 2; y++) { head.push("putinHead", "trumpHead", "kimHead", "kimHead", "kimHead"); }
             startGame();
-            stats();
-            $("body").css("background-image", "url('./img/trumpPutinKim.jpg')");
-            break;
+        stats();
+        $("body").css("background-image", "url('./img/trumpPutinKim.jpg')");
+        break;
         case "setting":
-            setTimeout(function () {
-                gameOptions();
-            }, 800);
-            break;
+        setTimeout(function () {
+            gameOptions();
+        }, 800);
+        break;
     }
 }
 
 //append level, shoot fired and timer to container
 function stats() {
-    $(".container").append($("<div></div>")
-        .addClass("top text-center")
-    );
-    $(".top").append($("<h3 class='a'>Level:<span class='level'>1</span></h3>"));
+    setTimeout(function(){
+        $(".container").append($("<div></div>")
+            .addClass("top text-center")
+            );
+        $(".top").append($("<h3 class='a'>Level:<span class='level'>1</span></h3>"));
 
-    $(".container").append($("<div></div>")
-        .addClass("row bottom align-items-end text-center")
-    );
-    $(".bottom").append(
-        $("<h3 class='b'>Shoot fired:<span class='shoot-fired'>0</span></h3>"),
-        $("<h3 class='time-left'>Time left:<span class='timer'>30</span></h3>")
-    );
-    $(".b, .time-left").addClass("col");
+        $(".container").append($("<div></div>")
+            .addClass("middle text-center")
+            );
+        $(".middle").append($("<h3 class='reload animated infinite zoomIn'>reload (click right or swipe)</h3>"));
+
+        $(".container").append($("<div></div>")
+            .addClass("row bottom align-items-end text-center")
+            );
+        $(".bottom").append(
+            $("<h3 class='b'>Shoot fired:<span class='shoot-fired'>0</span></h3>"),
+            $("<h3 class='time-left'>Time left:<span class='timer'>30</span></h3>"),
+            $("<h3 class='shoot-left'>Bullets Left:<span class='bullets'>6</span></h3>")
+            );
+        $(".b, .time-left, .shoot-left").addClass("col");
+    }, 1000)
 }
 
 //countDown timer setInterval
@@ -200,12 +196,37 @@ function chrono() {
 //start trump game
 function startGame() {
     shoot = 0;
+    bullets = 6;
     $(".shoot-fired").html(shoot);
     setTimeout(function () {
         createHead(head, numHead);
         chrono();
     }, 1000);
 }
+
+
+function headContainerClick(){
+    //play Shoot Sound & add shoot to shoot fired
+    $(".container").on("click", function () {
+        shoot += 1;
+        bullets -= 1;
+        $(".shoot-fired").html(shoot);
+        $(".bullets").html(bullets);
+        audio.setAttribute("src", gunSound);
+        audio.play();
+        if(bullets === 0){
+            $(".container").off("click");
+            $(".middle").css("visibility", "visible");
+        }
+    });
+
+    //make the 1st menu title hinge
+    $(".trump-hunt").on("click", function () {
+        $(this).animateCss("hinge");
+    });
+
+
+
 
 //click head explode target, counter for level, clearIntervals
 $(".container").on("click", ".head", function () {
@@ -233,27 +254,30 @@ $(".container").on("click", ".head", function () {
         level += 1;
         timer = 30;
         for (var i = 0; i < intervalIds.length; i++) { clearInterval(intervalIds[i]); }
-        if (level === 8) {
-            $(".head").remove();
-            clearInterval(countDown);
-            winGame();
+            if (level === 8) {
+                $(".head").remove();
+                clearInterval(countDown);
+                winGame();
+            }
+            else {
+                $(".level").html(level);
+                $(".head").remove();
+                clearInterval(countDown);
+                setTimeout(function () {
+                    startGame();
+                }, 1000);
+            }
         }
-        else {
-            $(".level").html(level);
-            $(".head").remove();
-            clearInterval(countDown);
-            setTimeout(function () {
-                startGame();
-            }, 1000);
-        }
-    }
-});
+    });
+
+}
+
 
 //game Over 
 function gameOver() {
     audio.setAttribute("src", "./sounds/game-over.mp3");
     audio.play();
-    $(".head, .top, .bottom").remove();
+    $(".head, .top, .middle, .bottom").remove();
     $(".container").append("<img src='./img/game-over.jpg' class='game-over animated infinite " + _.sample(animation) + "'>");
     setTimeout(function () {
         location.reload();
@@ -265,12 +289,13 @@ function winGame() {
     var audio = document.createElement("audio");
     audio.setAttribute("src", "./sounds/win-game.mp3");
     audio.play();
-    $(".head, .top, .bottom").remove();
+    $(".head, .top, .middle, .bottom").remove();
     $(".container").append("<img src='./img/game-win.jpg' class='game-win animated infinite " + _.sample(animation) + "'>");
     setTimeout(function () {
         location.reload();
     }, 11000);
 }
+
 
 //claculate top and left positions to animate heads
 function animateTopLeftCss() {
@@ -293,10 +318,12 @@ function createHead(array, num) {
             .attr("id", animateId)
             .css("top", positions[0] + "px")
             .css("left", positions[1] + "px")
-        );
+            );
         animateImg("#" + animateId);
     }
 }
+
+
 
 //animate heads
 function animateImg(headId) {
@@ -310,7 +337,7 @@ function animateImg(headId) {
 function gameOptions() {
     $(".container").append($("<div></div>")
         .addClass("options text-center animated fadeInDownBig")
-    );
+        );
 
     $(".options").append($("<h2>Crosshairs</h2>"));
 
@@ -329,7 +356,7 @@ function gameOptions() {
         $("<img title='torture' id='torture' class='sounds' src='img/sound-icon.ico'>"),
         $("<img title='sports-crowd'id='sports-crowd' class='sounds' src='img/sound-icon.ico'>"),
         $("<img class='arrow' src='img/arrow-left.png'>")
-    );
+        );
 
     $(".cursor").on("click", function () {
         var cursor = $(this).attr('src');
@@ -356,4 +383,23 @@ function gameOptions() {
         $("h2, h1, .bitcoin").slideToggle("slow");
     });
 
+}
+
+
+$(".container").on("contextmenu", function(){
+    reload();
+    headContainerClick();
+
+})
+
+$(".container").on("swipe", function(){
+    reload();
+    headContainerClick();
+
+})
+
+function reload(){
+    bullets = 6;
+    $(".middle").css("visibility", "hidden");
+    $(".bullets").html(bullets);
 }
