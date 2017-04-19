@@ -217,10 +217,9 @@ function headContainerClick(){
         if(bullets === 0){
             $(".container").off("click");
             $(".middle").css("visibility", "visible");
-            if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
- reload();
+            if (/Mobi|Tablet|iPad|iPhone/.test(navigator.userAgent)) {
+    reload();
 }
-
         }
     });
 
