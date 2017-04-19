@@ -217,6 +217,10 @@ function headContainerClick(){
         if(bullets === 0){
             $(".container").off("click");
             $(".middle").css("visibility", "visible");
+            if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+ reload();
+}
+
         }
     });
 
@@ -390,9 +394,6 @@ $(".container").on("contextmenu", function(){
     reload();
 })
 
-if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
- reload();
-}
 
 function reload(){
     bullets = 6;
