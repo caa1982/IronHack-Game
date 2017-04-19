@@ -303,7 +303,7 @@ function gameOver() {
 
 //win game
 function winGame() {
-    audio.play("win-game");
+    play("win-game");
     $(".head, .top, .middle, .bottom").remove();
     $(".container").append($("<h2 class='score'>Total score:<span class='points'>" + totalScore + "</span></h2>"));
     setTimeout(function () {
