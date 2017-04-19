@@ -44,7 +44,7 @@ function bitcoinDonation() {
 
         $(".container").append($("<div></div>")
             .addClass("btcDonation text-center animated fadeInDownBig")
-            );
+        );
 
         $(".btcDonation").append(
             $("<h2>Bitcoin Donations QR Code</h2>"),
@@ -52,15 +52,15 @@ function bitcoinDonation() {
             $("<h2>Total Donation:</h2>"),
             $("<h2><span class='donation'></span> btc</h2>"),
             $("<img class='arrow' src='img/arrow-left.png'>")
-            );
+        );
 
         $(".arrow").on("click", function () {
             $(".btcDonation").remove();
-            $("h2, h1, .bitcoin").slideToggle("slow");
+            toggleMenu();
         });
 
         $.getJSON("https://blockchain.info/q/addressbalance/1BmJkh8ukFBQANavHXLBeJaY7k3HsZtwSa", function (data) {
-            $(".donation").html(data/100000000);
+            $(".donation").html(data / 100000000);
         });
 
 
@@ -68,9 +68,9 @@ function bitcoinDonation() {
 }
 
 //play trump Intro sound
-function play(sound){
+function play(sound) {
     var audio = document.createElement("audio");
-    audio.setAttribute("src", "./sounds/"+sound+".mp3");
+    audio.setAttribute("src", "./sounds/" + sound + ".mp3");
     audio.play();
 }
 
@@ -86,7 +86,7 @@ function gameMenu() {
 
     //bitcoin Click menu donation page
     $(".bitcoin").on("click", function () {
-        $("h1, h2, .bitcoin").slideToggle("slow");
+        toggleMenu();
         bitcoinDonation();
     });
 
@@ -98,13 +98,18 @@ function gameMenu() {
         $(this).animateCss(animation.flash);
         $(this).unbind("click");
         setTimeout(function () {
-            $("h1, h2, .bitcoin").slideToggle("slow");
+            toggleMenu();
             selectGame(this.id);
         }.bind(this), 1400);
 
     });
 
-}    
+}
+
+//toogle main Menu
+function toggleMenu() {
+    $("h1, h2, .bitcoin").slideToggle("slow");
+}
 
 //head of Merkel shoot her and you get -5sec
 function merkelHead() {
@@ -116,57 +121,57 @@ function merkelHead() {
     createHead(merkelHeads, randomNumHeads);
 }
 
-//check start-game selection
+//check start user game selection
 function selectGame(key) {
     switch (key) {
         case "trump-game":
-        for (var i = 0; i < 10; i++) { head.push("trumpHead"); }
+            for (var i = 0; i < 10; i++) { head.push("trumpHead"); }
             startGame("trumpgame");
-        stats();
-        break;
+            stats();
+            break;
         case "trumpPutin-game":
-        for (var x = 0; x < 5; x++) { head.push("trumpHead"); head.push("putinHead"); }
+            for (var x = 0; x < 5; x++) { head.push("trumpHead"); head.push("putinHead"); }
             startGame("trumpPutin");
-        stats();
-        break;
+            stats();
+            break;
         case "trumpPutinKim-game":
-        for (var y = 0; y < 2; y++) { head.push("putinHead", "trumpHead", "kimHead", "kimHead", "kimHead"); }
+            for (var y = 0; y < 2; y++) { head.push("putinHead", "trumpHead", "kimHead", "kimHead", "kimHead"); }
             startGame("trumpPutinKim");
-        stats();
-        break;
+            stats();
+            break;
         case "setting":
-        setTimeout(function () {
-            gameOptions();
-        }, 800);
-        break;
+            setTimeout(function () {
+                gameOptions();
+            }, 800);
+            break;
     }
 }
 
 //append level, shoot fired and timer to container
 function stats() {
     score = 0;
-    setTimeout(function(){
+    setTimeout(function () {
         $(".container").append($("<div></div>")
             .addClass("row top")
-            );
+        );
         $(".top").append(
             $("<h3 class='levels'>Level:<span class='level'>1</span></h3>"),
             $("<h3 class='score'>score:<span class='points'>0</span></h3>")
-            );
+        );
 
         $(".container").append($("<div></div>")
             .addClass("middle")
-            );
+        );
         $(".middle").append($("<h3 class='reload animated infinite zoomIn'>reload (click right)</h3>"));
 
         $(".container").append($("<div></div>")
             .addClass("row bottom text-center")
-            );
+        );
         $(".bottom").append(
             $("<h3 class='b'>Shoot fired:<span class='shoot-fired'>0</span></h3>"),
             $("<h3 class='time-left'>Time left:<span class='timer'>30</span></h3>"),
             $("<h3 class='shoot-left'>Bullets Left:<span class='bullets'>6</span></h3>")
-            );
+        );
         $(".b, .time-left, .shoot-left, .levels, .score").addClass("col");
     }, 1000)
 }
@@ -198,7 +203,7 @@ function chrono() {
 function startGame(image) {
     shoot = 0;
     bullets = 6;
-    $("body").css("background-image", "url('./img/"+image+".jpg')");
+    $("body").css("background-image", "url('./img/" + image + ".jpg')");
     $(".shoot-fired").html(shoot);
     setTimeout(function () {
         createHead(head, numHead);
@@ -206,8 +211,8 @@ function startGame(image) {
     }, 1000);
 }
 
-
-function headContainerClick(){
+//function for click during the game
+function headContainerClick() {
     //play Shoot Sound & add shoot to shoot fired
     $(".container").on("click", function () {
         shoot += 1;
@@ -217,7 +222,7 @@ function headContainerClick(){
         $(".bullets").html(bullets);
         $(".points").html(score);
         play(gunSound);
-        if(bullets === 0){
+        if (bullets === 0) {
             $(".container").off("click");
             $(".middle").css("visibility", "visible");
         }
@@ -229,15 +234,15 @@ function headContainerClick(){
     });
 
 
-//change level function
-function levels(){
-    if (count === numHead && timer !== 0) {
-        count = 0;
-        speed -= 250;
-        numHead += 1;
-        level += 1;
-        timer = 30;
-        for (var i = 0; i < intervalIds.length; i++) { clearInterval(intervalIds[i]); }
+    //change level function
+    function levels() {
+        if (count === numHead && timer !== 0) {
+            count = 0;
+            speed -= 250;
+            numHead += 1;
+            level += 1;
+            timer = 30;
+            for (var i = 0; i < intervalIds.length; i++) { clearInterval(intervalIds[i]); }
             if (level === 8) {
                 $(".head").remove();
                 totalScore += score;
@@ -256,37 +261,36 @@ function levels(){
         }
     }
 
-//click head explode target, counter for level, clearIntervals
-$(".container").on("click", ".head", function () {
-    $(this).click(false);
-    play(killSound);
-    levels();
+    //click head explode target, counter for level, clearIntervals
+    $(".container").on("click", ".head", function () {
+        $(this).click(false);
+        play(killSound);
+        levels();
 
-    $(this).removeClass("animated infinite flip");
+        $(this).removeClass("animated infinite flip");
 
-    setTimeout(function () {
-        $(this).hide("explode", { pieces: 64 }, 1000).remove();
-    }.bind(this), 700);
+        setTimeout(function () {
+            $(this).hide("explode", { pieces: 64 }, 1000).remove();
+        }.bind(this), 700);
 
-    if ($(this).attr("src") === "./img/merkelHead.png") {
-        timer -= 5;
-        score -= 14;
-    }
-    else {
-        count++;
-        score +=11;
-    }
+        if ($(this).attr("src") === "./img/merkelHead.png") {
+            timer -= 5;
+            score -= 14;
+        }
+        else {
+            count++;
+            score += 11;
+        }
 
-});
+    });
 
 }
-
 
 //game Over 
 function gameOver() {
     play("game-over");
     $(".head, .top, .middle, .bottom").remove();
-    $(".container").append($("<h2 class='score'>Total score:<span class='points'>"+totalScore+"</span></h2>"));
+    $(".container").append($("<h2 class='score'>Total score:<span class='points'>" + totalScore + "</span></h2>"));
     setTimeout(function () {
         $(".score").remove();
         $(".container").append("<img src='./img/game-over.jpg' class='game-over animated infinite " + _.sample(animation) + "'>");
@@ -301,7 +305,7 @@ function gameOver() {
 function winGame() {
     audio.play("win-game");
     $(".head, .top, .middle, .bottom").remove();
-    $(".container").append($("<h2 class='score'>Total score:<span class='points'>"+totalScore+"</span></h2>"));
+    $(".container").append($("<h2 class='score'>Total score:<span class='points'>" + totalScore + "</span></h2>"));
     setTimeout(function () {
         $(".score").remove();
         $(".container").append("<img src='./img/game-win.jpg' class='game-win animated infinite " + _.sample(animation) + "'>");
@@ -310,7 +314,6 @@ function winGame() {
         location.reload();
     }, 11000);
 }
-
 
 //claculate top and left positions to animate heads
 function animateTopLeftCss() {
@@ -333,12 +336,10 @@ function createHead(array, num) {
             .attr("id", animateId)
             .css("top", positions[0] + "px")
             .css("left", positions[1] + "px")
-            );
+        );
         animateImg("#" + animateId);
     }
 }
-
-
 
 //animate heads
 function animateImg(headId) {
@@ -352,7 +353,7 @@ function animateImg(headId) {
 function gameOptions() {
     $(".container").append($("<div></div>")
         .addClass("options text-center animated fadeInDownBig")
-        );
+    );
 
     $(".options").append($("<h2>Crosshairs</h2>"));
 
@@ -371,7 +372,7 @@ function gameOptions() {
         $("<img title='torture' id='torture' class='sounds' src='img/sound-icon.ico'>"),
         $("<img title='sports-crowd'id='sports-crowd' class='sounds' src='img/sound-icon.ico'>"),
         $("<img class='arrow' src='img/arrow-left.png'>")
-        );
+    );
 
     $(".cursor").on("click", function () {
         var cursor = $(this).attr('src');
@@ -393,16 +394,17 @@ function gameOptions() {
 
     $(".arrow").on("click", function () {
         $(".options").remove();
-        $("h2, h1, .bitcoin").slideToggle("slow");
+        toggleMenu();
     });
 
 }
 
-$(".container").on("contextmenu", function(){
+$(".container").on("contextmenu", function () {
     reload();
 })
 
-function reload(){
+//reload bullets and hide user flash info on game
+function reload() {
     bullets = 6;
     $(".middle").css("visibility", "hidden");
     $(".bullets").html(bullets);
