@@ -391,8 +391,8 @@ $(".container").on("contextmenu", function(){
 })
 
 $(document).on('pageinit', function(event){
-   $(".container").swipe(function() {
-        reload();
+   $(".container").swiperight(function() {
+        $.mobile.reload();
     });
 });
 function reload(){
