@@ -156,7 +156,7 @@ function stats() {
         $(".container").append($("<div></div>")
             .addClass("middle text-center")
             );
-        $(".middle").append($("<h3 class='reload animated infinite zoomIn'>reload (click right or swipe)</h3>"));
+        $(".middle").append($("<h3 class='reload animated infinite zoomIn'>reload (click right)</h3>"));
 
         $(".container").append($("<div></div>")
             .addClass("row bottom align-items-end text-center")
@@ -387,10 +387,6 @@ function gameOptions() {
 
 
 $(".container").on("contextmenu", function(){
-    reload();
-})
-
-$("body").on("swipe", function(){
     reload();
 })
 
