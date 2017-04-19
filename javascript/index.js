@@ -388,18 +388,15 @@ function gameOptions() {
 
 $(".container").on("contextmenu", function(){
     reload();
-    headContainerClick();
-
 })
 
 $(".container").on("swipe", function(){
     reload();
-    headContainerClick();
-
 })
 
 function reload(){
     bullets = 6;
     $(".middle").css("visibility", "hidden");
     $(".bullets").html(bullets);
+    headContainerClick();
 }
