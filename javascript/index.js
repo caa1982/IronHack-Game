@@ -121,21 +121,18 @@ function selectGame(key) {
     switch (key) {
         case "trump-game":
         for (var i = 0; i < 10; i++) { head.push("trumpHead"); }
-            startGame();
+            startGame("trumpgame");
         stats();
-        $("body").css("background-image", "url('./img/trumpgame.jpg')");
         break;
         case "trumpPutin-game":
         for (var x = 0; x < 5; x++) { head.push("trumpHead"); head.push("putinHead"); }
-            startGame();
+            startGame("trumpPutin");
         stats();
-        $("body").css("background-image", "url('./img/trumpPutin.jpg')");
         break;
         case "trumpPutinKim-game":
         for (var y = 0; y < 2; y++) { head.push("putinHead", "trumpHead", "kimHead", "kimHead", "kimHead"); }
-            startGame();
+            startGame("trumpPutinKim");
         stats();
-        $("body").css("background-image", "url('./img/trumpPutinKim.jpg')");
         break;
         case "setting":
         setTimeout(function () {
@@ -198,10 +195,11 @@ function chrono() {
     }, 1000);
 }
 
-//start trump game
-function startGame() {
+//start game
+function startGame(image) {
     shoot = 0;
     bullets = 6;
+    $("body").css("background-image", "url('./img/"+image+".jpg')");
     $(".shoot-fired").html(shoot);
     setTimeout(function () {
         createHead(head, numHead);
