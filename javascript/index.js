@@ -55,6 +55,7 @@ function gameMenu() {
 
     //bitcoin Click menu donation page
     $(".bitcoin").on("click", function () {
+        $(this).off("click");
         toggleMenu();
         bitcoinDonation();
     });
@@ -65,7 +66,7 @@ function gameMenu() {
     //make the h2 option menu flash and toggle
     $("h2").on("click", function () {
         $(this).animateCss(animation.flash);
-        $(this).unbind("click");
+        $(this).off("click");
         setTimeout(function () {
             toggleMenu();
             selectGame(this.id);
@@ -105,8 +106,7 @@ function bitcoinDonation() {
         );
 
         $(".arrow").on("click", function () {
-            $(".btcDonation").remove();
-            toggleMenu();
+            location.reload();
         });
 
         $.getJSON("https://blockchain.info/q/addressbalance/1BmJkh8ukFBQANavHXLBeJaY7k3HsZtwSa", function (data) {
