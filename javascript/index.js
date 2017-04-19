@@ -212,17 +212,9 @@ function selectGame(key) {
     }
 }
 
-<<<<<<< HEAD
-//win game
-function winGame() {
-    play("win-game");
-    $(".head, .top, .middle, .bottom").remove();
-    $(".container").append($("<h2 class='score'>Total score:<span class='points'>" + totalScore + "</span></h2>"));
-=======
 //append level, shoot fired and timer to container
 function stats() {
     score = 0;
->>>>>>> gh-pages
     setTimeout(function () {
         $(".container").append($("<div></div>")
             .addClass("row top")
