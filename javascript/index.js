@@ -217,9 +217,6 @@ function headContainerClick(){
         if(bullets === 0){
             $(".container").off("click");
             $(".middle").css("visibility", "visible");
-            if (/Mobi|Tablet|iPad|iPhone/.test(navigator.userAgent)) {
-    reload();
-}
         }
     });
 
@@ -393,6 +390,9 @@ $(".container").on("contextmenu", function(){
     reload();
 })
 
+$(".container").on("swipe", function(){
+    reload();
+})
 
 function reload(){
     bullets = 6;
