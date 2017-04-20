@@ -224,7 +224,7 @@ function stats() {
     score = 0;
     setTimeout(function () {
         $(".container").append($("<div></div>")
-            .addClass("top row")
+            .addClass("top row text-center")
         );
         $(".top").append(
             $("<h3 class='levels'>Level:<span class='level'>1</span></h3>"),

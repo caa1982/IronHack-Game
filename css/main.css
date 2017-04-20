@@ -53,9 +53,6 @@ h2{
 }
 
 .container{
-	display: flex;
-    justify-content: center;
-    align-items: center;
     position: relative;
 	height: 80%;
 	width: 90%;
