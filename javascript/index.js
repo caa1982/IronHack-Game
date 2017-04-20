@@ -224,7 +224,7 @@ function stats() {
     score = 0;
     setTimeout(function () {
         $(".container").append($("<div></div>")
-            .addClass("row top")
+            .addClass("top row")
         );
         $(".top").append(
             $("<h3 class='levels'>Level:<span class='level'>1</span></h3>"),
@@ -232,12 +232,12 @@ function stats() {
         );
 
         $(".container").append($("<div></div>")
-            .addClass("middle")
+            .addClass("middle row")
         );
         $(".middle").append($("<h3 class='reload animated infinite zoomIn'>reload (click right)</h3>"));
 
         $(".container").append($("<div></div>")
-            .addClass("row bottom text-center")
+            .addClass("bottom row text-center")
         );
         $(".bottom").append(
             $("<h3 class='b'>Shoot fired:<span class='shoot-fired'>0</span></h3>"),
