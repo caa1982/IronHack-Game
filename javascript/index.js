@@ -92,7 +92,7 @@ function bitcoinDonation() {
 
 
     setTimeout(function () {
-
+        //bitcoin donation
         $(".container").append($("<div></div>")
             .addClass("btcDonation text-center animated fadeInDownBig")
         );
@@ -148,6 +148,10 @@ function headContainerClick() {
         if ($(this).attr("src") === "./img/merkelHead.png") {
             timer -= 5;
             score -= 14;
+        }
+        else if ($(this).attr("src") === "./img/thor.png") {
+            score += 101;
+            timer += 5;
         }
         else {
             count += 1;
@@ -241,7 +245,7 @@ function stats() {
             $("<h3 class='shoot-left'>Bullets Left:<span class='bullets'>6</span></h3>")
         );
         $(".b, .time-left, .shoot-left, .levels, .score").addClass("col");
-    }, 1000)
+    }, 1000);
 }
 
 //start game
