@@ -119,6 +119,10 @@ function bitcoinDonation() {
 
 //function for click during the game
 function headContainerClick() {
+    
+    $(".container").off("click");
+    $(".head").off("click");
+
     //play Shoot Sound & add shoot to shoot fired
     $(".container").on("click", function () {
         shoot += 1;
@@ -139,7 +143,6 @@ function headContainerClick() {
         play(killSound);
 
         $(this).click(false);
-
         $(this).removeClass("animated infinite flip");
 
         setTimeout(function () {
@@ -153,6 +156,7 @@ function headContainerClick() {
         else {
             count += 1;
             score += 11;
+            console.log(count)
             levels();
         }
 
@@ -163,7 +167,6 @@ function headContainerClick() {
 //change level function
 function levels() {
     if (count === numHead && timer !== 0) {
-        count = 0;
         speed -= 250;
         numHead += 1;
         level += 1;
@@ -176,6 +179,7 @@ function levels() {
             winGame();
         }
         else {
+            count = 0;
             $(".level").html(level);
             $(".head").remove();
             totalScore += score;
