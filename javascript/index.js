@@ -136,8 +136,9 @@ function headContainerClick() {
 
     //click head explode target, counter for level, clearIntervals
     $(".container").on("click", ".head", function () {
-        $(this).click(false);
         play(killSound);
+
+        $(this).click(false);
 
         $(this).removeClass("animated infinite flip");
 
@@ -148,10 +149,6 @@ function headContainerClick() {
         if ($(this).attr("src") === "./img/merkelHead.png") {
             timer -= 5;
             score -= 14;
-        }
-        else if ($(this).attr("src") === "./img/thor.png") {
-            score += 101;
-            timer += 5;
         }
         else {
             count += 1;
