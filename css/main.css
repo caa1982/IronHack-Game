@@ -56,6 +56,7 @@ h2{
 	display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 	height: 80%;
 	width: 90%;
 	background-color: rgba(255, 255, 255, 0.5);
@@ -187,26 +188,4 @@ footer{
     height: auto;
 	margin-top: 1%;
 	text-align: center;
-}
-
-
-.htmlsidr {overflow: hidden; position: relative; }
-corps .htmlsidr {overflow: hidden; }
-.sidr {margin: 0; largeur: 75%! important; Position: fixe; gauche: 0; droite: 0; top: 0; bas: 0; z-index: 0;
-        -webkit transformée: translate3d (0%, 0, 0); 
-        -moz-transform: translate3d (0%, 0, 0);
-        -ms-transform: translate3d (0%, 0, 0);
-        -o-transform: translate3d (0%, 0, 0);
-        transformer: translate3d (0%, 0, 0); 
-	display: none;
-}
-.closesidr {background: #ffffff; opacité: 0,5; Position: fixe; z-index: 100; largeur: 100%; hauteur: 100%; gauche: 0; top: 0; display: none; }
-.htmlsidr .closesidr {display: block; }
-.htmlsidr #wrapper {  
-  -webkit transformée: traduire (75%, 0);
-  -moz-transform: traduire (75%, 0);
-  -ms-transform: traduire (75%, 0);
-  -o-transform: traduire (75%, 0);
-  transformer: traduire (75%, 0);
-  position: relative; overflow: hidden;
 }
