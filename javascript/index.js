@@ -132,7 +132,7 @@ function headContainerClick() {
         $(".points").html(score);
         play(gunSound);
         if (bullets === 0) {
-            $(".container").click(false);
+            $(".container").off("click");
             $(".middle").css("visibility", "visible");
         }
     });
