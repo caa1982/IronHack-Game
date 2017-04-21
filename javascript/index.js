@@ -5,7 +5,7 @@ $(document).ready(function () {
 
 
 var _u = _.noConflict();
-var speed = 2000, level = 1, shoot = 0, timer = 30, count = 0, numHead = 3, bullets = 100, score = 0, totalScore = 0;
+var speed = 2000, level = 1, shoot = 0, timer = 30, count = 0, numHead = 3, bullets = 100, score = 0;
 var gunSound = "magnum";
 var killSound = "wilhem";
 var image = "";
@@ -132,7 +132,7 @@ function headContainerClick() {
         $(".points").html(score);
         play(gunSound);
         if (bullets === 0) {
-            $(".container").off("click");
+            $(".container").click(false);
             $(".middle").css("visibility", "visible");
         }
     });
@@ -155,7 +155,6 @@ function headContainerClick() {
         else {
             count += 1;
             score += 11;
-            console.log(count)
             levels();
         }
 
@@ -173,7 +172,6 @@ function levels() {
         for (var i = 0; i < intervalIds.length; i++) { clearInterval(intervalIds[i]); }
         if (level === 8) {
             $(".head").remove();
-            totalScore += score;
             clearInterval(countDown);
             winGame();
         }
@@ -181,7 +179,6 @@ function levels() {
             count = 0;
             $(".level").html(level);
             $(".head").remove();
-            totalScore += score;
             clearInterval(countDown);
             setTimeout(function () {
                 startGame();
@@ -267,7 +264,6 @@ function chrono() {
         timer -= 1;
         $(".timer").html(timer);
         if (timer <= 0) {
-            totalScore += score;
             clearInterval(countDown);
             gameOver();
         }
@@ -331,13 +327,12 @@ function gameOver() {
     $(".container").off("click");
     play("game-over");
     $(".head, .top, .middle, .bottom").remove();
-    $(".container").append($("<h2 class='score'>Total score:<span class='points'>" + totalScore + "</span></h2>"));
+    $(".container").append($("<h2 class='score'>Total score:<span class='points'>" + score + "</span></h2>"));
     setTimeout(function () {
         $(".score").remove();
         $(".container").append("<img src='./img/game-over.jpg' class='game-over animated infinite " + _.sample(animation) + "'>");
     }, 5000);
     setTimeout(function () {
-        totalScore = 0;
         location.reload();
     }, 11000);
 }
@@ -346,7 +341,7 @@ function winGame() {
     $(".container").off("click");
     play("win-game");
     $(".head, .top, .middle, .bottom").remove();
-    $(".container").append($("<h2 class='score'>Total score:<span class='points'>" + totalScore + "</span></h2>"));
+    $(".container").append($("<h2 class='score'>Total score:<span class='points'>" + score + "</span></h2>"));
     setTimeout(function () {
         $(".score").remove();
         $(".container").append("<img src='./img/game-win.jpg' class='game-win animated infinite " + _.sample(animation) + "'>");
