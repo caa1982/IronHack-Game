@@ -121,7 +121,6 @@ function bitcoinDonation() {
 function headContainerClick() {
     
     $(".container").off("click");
-    $(".head").off("click");
 
     //play Shoot Sound & add shoot to shoot fired
     $(".container").on("click", function () {
@@ -329,6 +328,7 @@ function animateImg(headId) {
 }
 
 function gameOver() {
+    $(".container").off("click");
     play("game-over");
     $(".head, .top, .middle, .bottom").remove();
     $(".container").append($("<h2 class='score'>Total score:<span class='points'>" + totalScore + "</span></h2>"));
@@ -343,6 +343,7 @@ function gameOver() {
 }
 
 function winGame() {
+    $(".container").off("click");
     play("win-game");
     $(".head, .top, .middle, .bottom").remove();
     $(".container").append($("<h2 class='score'>Total score:<span class='points'>" + totalScore + "</span></h2>"));
