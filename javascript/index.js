@@ -231,7 +231,7 @@ function stats() {
         $(".container").append($("<div></div>")
             .addClass("middle row")
         );
-        $(".middle").append($("<h3 class='reload animated infinite zoomIn'>reload (click right)</h3>"));
+        $(".middle").append($("<h3 class='reload animated infinite zoomIn'>reload (PC click right - Mobile press and hold)</h3>"));
 
         $(".container").append($("<div></div>")
             .addClass("bottom row text-center")
